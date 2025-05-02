@@ -1,0 +1,95 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+df=pd.read_csv("C:\EXCEL FILE\\new data.csv")
+print(df)
+#1-- Average life expectancy per year per region
+# life_expectancy_trend = df.groupby(['Region', 'Year'])['Life expectancy at birth (years)'].mean().reset_index()
+#
+# plt.figure(figsize=(14, 7))
+# sns.lineplot(data=life_expectancy_trend, x='Year', y='Life expectancy at birth (years)', hue='Region', marker='o')
+# plt.title("Life Expectancy Over Time by Region")
+# plt.ylabel("Life Expectancy (Years)")
+# plt.xlabel("Year")
+# plt.legend(title="Region", bbox_to_anchor=(1.05, 1), loc='upper left')
+# plt.tight_layout()
+# plt.show()
+
+
+#2---Correlation Between Internet Usage and GDP per Capita
+# Drop missing values for the two relevant columns
+# internet_gdp = df[['GDP per capita (USD)', 'Individuals using the Internet (% of population)']].dropna()
+#
+# plt.figure(figsize=(10, 6))
+# sns.scatterplot(data=internet_gdp, x='GDP per capita (USD)', y='Individuals using the Internet (% of population)')
+# sns.regplot(data=internet_gdp, x='GDP per capita (USD)', y='Individuals using the Internet (% of population)', scatter=False, color='red')
+# plt.title("Internet Usage vs GDP per Capita")
+# plt.xlabel("GDP per Capita (USD)")
+# plt.ylabel("Internet Users (% of Population)")
+# plt.show()
+
+# 4. Relationship Between Birth/Death Rates and Population Density
+# plt.figure(figsize=(14, 6))
+# plt.subplot(1, 2, 1)
+# sns.scatterplot(data=df, x='Population density (people per sq. km of land area)', y='Infant mortality rate (per 1,000 live births)')
+# plt.title("Birth Rate vs Population Density")
+# plt.xlabel("Population Density")
+# plt.ylabel("Birth Rate")
+#
+# plt.subplot(1, 2, 2)
+# sns.scatterplot(data=df, x='Population density (people per sq. km of land area)', y='Infant mortality rate (per 1,000 live births)')
+# plt.title("Death Rate vs Population Density")
+# plt.xlabel("Population Density")
+# plt.ylabel("Death Rate")
+#
+# plt.tight_layout()
+# plt.show()
+
+
+#5--- Population density vs Unemployment Graph..
+
+# Clean and convert necessary columns to numeric
+# df["Population density (people per sq. km of land area)"] = pd.to_numeric(df["Population density (people per sq. km of land area)"], errors='coerce')
+# df["Unemployment (% of total labor force) (modeled ILO estimate)"] = pd.to_numeric(df["Unemployment (% of total labor force) (modeled ILO estimate)"], errors='coerce')
+#
+# # Drop rows with missing values in the relevant columns
+# plot_df = df.dropna(subset=[
+#     "Population density (people per sq. km of land area)",
+#     "Unemployment (% of total labor force) (modeled ILO estimate)"
+# ])
+#
+# # Plotting
+# plt.figure(figsize=(10, 6))
+# plt.scatter(plot_df["Population density (people per sq. km of land area)"],plot_df["Unemployment (% of total labor force) (modeled ILO estimate)"],
+#     alpha=0.6
+# )
+# plt.title("Unemployment Rate vs. Population Density")
+# plt.xlabel("Population Density (people per sq. km of land area)")
+# plt.ylabel("Unemployment Rate (% of total labor force)")
+# plt.grid(True)
+# plt.tight_layout()
+# plt.show()
+
+# Analysis  the Birth rate, crude (per 1,000 people) vs Death rate, crude (per 1,000 people) using Hist Plot
+
+sns.set(style="whitegrid")
+
+# Drop rows with missing values in either Birth or Death rate columns
+filtered_df = df.dropna(subset=["Birth rate, crude (per 1,000 people)","Death rate, crude (per 1,000 people)"])
+
+# Create histograms for birth and death rates
+plt.figure(figsize=(12, 6))
+
+# Histogram for Birth Rate
+sns.histplot(filtered_df["Birth rate, crude (per 1,000 people)"], color="skyblue", label="Birth Rate", kde=True)
+
+# Histogram for Death Rate
+sns.histplot(filtered_df["Death rate, crude (per 1,000 people)"], color="salmon", label="Death Rate", kde=True)
+
+plt.title("Distribution of Crude Birth and Death Rates (per 1,000 people)")
+plt.xlabel("Rate per 1,000 People")
+plt.ylabel("Frequency")
+plt.legend()
+plt.tight_layout()
+plt.show()
